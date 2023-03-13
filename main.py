@@ -1,7 +1,8 @@
-from music_bot import *
-from configuration import *
+import pathlib
+from MusicBot.music_bot import *
+from Configuration.configuration import *
 
-config_file = 'config.json'
+config_file = '{}/config.json'.format(pathlib.Path(__file__).parent.resolve())
 configuration = read_configuration(config_file)
 discord_token = configuration["discord_token"]
 discord_guild_id = configuration["discord_guild_id"]
