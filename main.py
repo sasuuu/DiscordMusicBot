@@ -1,6 +1,11 @@
 import pathlib
 from MusicBot.music_bot import *
 from Configuration.configuration import *
+import asyncio
+import platform
+
+if platform.system()=='Windows':
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 config_file = '{}/config.json'.format(pathlib.Path(__file__).parent.resolve())
 configuration = read_configuration(config_file)
