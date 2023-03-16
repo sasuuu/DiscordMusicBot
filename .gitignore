@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 
 config.json
+downloaded_songs/
+executables/ffmpeg.exe
