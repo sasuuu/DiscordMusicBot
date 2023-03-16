@@ -161,4 +161,4 @@ cython_debug/
 
 config.json
 downloaded_songs/
-executables/ffmpeg.exe
+executables/
