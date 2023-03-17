@@ -1,10 +1,7 @@
 from discord.ext import commands
 from players.music_player import *
 
-TIME_BETWEEN_NEXT_CHECK_FOR_DOWNLOADED_SONG = 2
-
 class MusicBot(commands.Bot):
-
     def __init__(self, prefix, guild_id):
         super().__init__(command_prefix=prefix)
         self.guild_id = int(guild_id)
