@@ -42,10 +42,10 @@ if __name__ == "__main__":
 
         if 'entires' in youtube_link_info:
             for entry in youtube_link_info['entries']:
-                ctx.bot.put_song_to_download_on_queue(search_for_video_link(entry['title']))
+                ctx.bot.put_song_to_download_on_queue(entry['webpage_url'])
             await ctx.send(f'{len(youtube_link_info["entries"])} songs from playlist added.')
         else:
-            ctx.bot.put_song_to_download_on_queue(search_for_video_link(youtube_link_info['title']))
+            ctx.bot.put_song_to_download_on_queue(youtube_link_info['webpage_url'])
             await ctx.send(f'{youtube_link_info["title"]} added.')
 
         if voice_client is not None and not voice_client.is_playing():
