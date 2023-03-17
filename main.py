@@ -38,14 +38,22 @@ if __name__ == "__main__":
         else:
             youtube_link = message
 
-        youtube_link_info = await get_url_info(youtube_link)
+        youtube_link_info = await get_info_from_url(youtube_link)
 
         if 'entires' in youtube_link_info:
             for entry in youtube_link_info['entries']:
-                ctx.bot.put_song_to_download_on_queue(entry['webpage_url'])
+                ctx.bot.songs.append({
+                    'url': entry['url'],
+                    'title': entry['title'],
+                    'id': ctx.bot.songs[-1]['id'] + 1 if len(ctx.bot.songs) > 0 else 1
+                })
             await ctx.send(f'{len(youtube_link_info["entries"])} songs from playlist added.')
         else:
-            ctx.bot.put_song_to_download_on_queue(youtube_link_info['webpage_url'])
+            ctx.bot.songs.append({
+                    'url': youtube_link_info['url'],
+                    'title': youtube_link_info['title'],
+                    'id': ctx.bot.songs[-1]['id'] + 1 if len(ctx.bot.songs) > 0 else 1
+                })
             await ctx.send(f'{youtube_link_info["title"]} added.')
 
         if voice_client is not None and not voice_client.is_playing():
@@ -56,4 +64,3 @@ if __name__ == "__main__":
         print("Logged in as a bot {0.user}".format(bot))
 
     bot.run(DISCORD_TOKEN)
-    bot.finalize()
