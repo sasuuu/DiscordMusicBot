@@ -19,7 +19,7 @@ class MusicBot(commands.Bot):
         channel = ctx.message.author.voice.channel
         await channel.connect()
         self.songs = []
-        self.current_song_index = 0
+        self.current_song_index = None
         return ctx.message.guild.voice_client
 
     def play_next_song_from_queue(self, e=None):
@@ -48,6 +48,7 @@ class MusicBot(commands.Bot):
             self.current_song_index += 1
 
         if self.current_song_index >= len(self.songs):
+            self.dispatch('disconnect_client', voice_client)
             return None
 
         player = get_player(self.songs[self.current_song_index]['url'])

@@ -63,4 +63,16 @@ if __name__ == "__main__":
     async def on_ready():
         print("Logged in as a bot {0.user}".format(bot))
 
+    @bot.event
+    async def on_disconnect_client(voice_client):
+        if voice_client is None:
+            print('Bot is not added to guild')
+            return None
+    
+        if not voice_client.is_connected():
+            print('Bot is not connected to any channel')
+            return None
+        
+        await voice_client.disconnect()
+
     bot.run(DISCORD_TOKEN)
