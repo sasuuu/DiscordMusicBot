@@ -17,4 +17,7 @@ YTDL_FORMAT_OPTIONS = {
 async def get_info_from_url(url, *, loop=None):
     loop = loop or asyncio.get_event_loop()
     ytdl = youtube_dl.YoutubeDL(YTDL_FORMAT_OPTIONS)
-    return await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
+    try:
+        return await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
+    except:
+        return None

@@ -1,6 +1,8 @@
 from discord.ext import commands
 from players.music_player import *
 
+DICONNECT_MUSIC_BOT_EVENT = 'disconnect_client'
+
 class MusicBot(commands.Bot):
     def __init__(self, prefix, guild_id):
         super().__init__(command_prefix=prefix)
@@ -39,14 +41,22 @@ class MusicBot(commands.Bot):
         if voice_client.is_playing():
             return None
         
-        if self.current_song_index is None:
-            self.current_song_index = 0
-        else:
-            self.current_song_index += 1
+        self.current_song_index = 0 if self.current_song_index is None else self.current_song_index + 1
 
         if self.current_song_index >= len(self.songs):
-            self.dispatch('disconnect_client', voice_client)
+            self.dispatch(DICONNECT_MUSIC_BOT_EVENT, voice_client)
             return None
 
+        player = get_player(self.songs[self.current_song_index]['url'])
+        voice_client.play(player, after=self.play_next_song_from_queue)
+
+    def skip_song(self, voice_client):
+        self.current_song_index = 0 if self.current_song_index is None else self.current_song_index + 1
+
+        if self.current_song_index >= len(self.songs):
+            self.dispatch(DICONNECT_MUSIC_BOT_EVENT, voice_client)
+            return None
+
+        voice_client.stop()
         player = get_player(self.songs[self.current_song_index]['url'])
         voice_client.play(player, after=self.play_next_song_from_queue)

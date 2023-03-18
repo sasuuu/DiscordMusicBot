@@ -14,19 +14,17 @@ class MusicBotCommands(commands.Cog):
             print(f'Skipping because guild_id({ctx.guild.id}) is different than {self.bot.guild_id}')
             return
         
+        youtube_link = search_for_video_link(message) if not message.startswith('https://') else message
+
+        youtube_link_info = await get_info_from_url(youtube_link)
+
+        if youtube_link_info is None:
+            await ctx.send(f'Invalid youtube link')
+            return
+
         voice_client = ctx.message.guild.voice_client
         if voice_client is None or not voice_client.is_connected():
             voice_client = await self.bot.add_bot_to_voice_channel(ctx)
-
-        if voice_client is None:
-            return
-        
-        if not message.startswith('https://'):
-            youtube_link = search_for_video_link(message)
-        else:
-            youtube_link = message
-
-        youtube_link_info = await get_info_from_url(youtube_link)
 
         if 'entires' in youtube_link_info:
             for entry in youtube_link_info['entries']:
@@ -46,3 +44,17 @@ class MusicBotCommands(commands.Cog):
 
         if voice_client is not None and not voice_client.is_playing():
             self.bot.play_next_song_from_queue()
+    
+    @commands.command(name='skip')
+    async def skip(self, ctx):
+        if ctx.guild.id != self.bot.guild_id:
+            print(f'Skipping because guild_id({ctx.guild.id}) is different than {self.bot.guild_id}')
+            return
+        
+        voice_client = ctx.message.guild.voice_client
+        if voice_client is None or not voice_client.is_connected():
+            await ctx.send('Bot is not connected to any channel')
+
+        self.bot.skip_song(voice_client)
+
+        
