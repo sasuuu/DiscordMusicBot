@@ -18,4 +18,7 @@ class MusicBotEvents(commands.Cog):
             print('Bot is not connected to any channel')
             return None
         
+        if voice_client.is_playing():
+            voice_client.stop()
+        
         await voice_client.disconnect()
