@@ -1,4 +1,4 @@
-import youtube_dl
+import yt_dlp
 import asyncio
 
 YTDL_FORMAT_OPTIONS = {
@@ -16,7 +16,7 @@ YTDL_FORMAT_OPTIONS = {
 
 async def get_info_from_url(url, *, loop=None):
     loop = loop or asyncio.get_event_loop()
-    ytdl = youtube_dl.YoutubeDL(YTDL_FORMAT_OPTIONS)
+    ytdl = yt_dlp.YoutubeDL(YTDL_FORMAT_OPTIONS)
     try:
         return await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
     except:
