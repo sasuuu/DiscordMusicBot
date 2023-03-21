@@ -11,7 +11,8 @@ YTDL_FORMAT_OPTIONS = {
     'quiet': True,
     'no_warnings': True,
     'default_search': 'auto',
-    'source_address': '0.0.0.0'
+    'source_address': '0.0.0.0',
+    'compat-options': 'multistreams'
 }
 
 async def get_info_from_url(url, *, loop=None):
