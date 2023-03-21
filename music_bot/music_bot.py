@@ -1,3 +1,4 @@
+from discord import Intents
 from discord.ext import commands
 from players.music_player import *
 
@@ -5,7 +6,7 @@ DICONNECT_MUSIC_BOT_EVENT = 'disconnect_client'
 
 class MusicBot(commands.Bot):
     def __init__(self, prefix, guild_id):
-        super().__init__(command_prefix=prefix)
+        super().__init__(command_prefix=prefix, intents=Intents.all())
         self.guild_id = int(guild_id)
         self.songs = []
         self.current_song_index = None

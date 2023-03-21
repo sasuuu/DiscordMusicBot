@@ -20,7 +20,7 @@ if __name__ == "__main__":
     print(f'Discord guild: {DISCORD_GUID_ID}')
     bot = MusicBot(DISCORD_COMMAND_PREFIX, DISCORD_GUID_ID)
 
-    bot.add_cog(MusicBotCommands(bot))
-    bot.add_cog(MusicBotEvents(bot))
-
+    asyncio.run(bot.add_cog(MusicBotCommands(bot)))
+    asyncio.run(bot.add_cog(MusicBotEvents(bot)))
+    
     bot.run(DISCORD_TOKEN)

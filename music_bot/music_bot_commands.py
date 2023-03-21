@@ -8,7 +8,7 @@ class MusicBotCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name='play')
+    @commands.command()
     async def play(self, ctx, *, message):
         if ctx.guild.id != self.bot.guild_id:
             print(f'Skipping because guild_id({ctx.guild.id}) is different than {self.bot.guild_id}')
@@ -16,7 +16,7 @@ class MusicBotCommands(commands.Cog):
         
         youtube_link = search_for_video_link(message) if not message.startswith('https://') else message
 
-        youtube_link_info = await get_info_from_url(youtube_link)
+        youtube_link_info = await get_info_from_url(youtube_link, loop=self.bot.loop)
 
         if youtube_link_info is None:
             await ctx.send(f'Invalid youtube link')
@@ -45,7 +45,7 @@ class MusicBotCommands(commands.Cog):
         if voice_client is not None and not voice_client.is_playing():
             self.bot.play_next_song_from_queue()
     
-    @commands.command(name='skip')
+    @commands.command()
     async def skip(self, ctx):
         if ctx.guild.id != self.bot.guild_id:
             print(f'Skipping because guild_id({ctx.guild.id}) is different than {self.bot.guild_id}')
