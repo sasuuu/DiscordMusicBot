@@ -1,10 +1,9 @@
 # DiscordMusicBot
 
 ## Description
-Simple discord bot for playing music from youtube in voice channel.
+Simple discord bot for playing music from youtube using voice channel.
 
 ## Image creation
-Application images are created by Docker using simple build command:
-```
-docker build -t sasuuu/music-bot:v{IMAGE_VERSION} -f Dockerfile .
-```
+There is a Github Action created which is triggered automatically during:
+- push to main branch
+- push new tag with correct semver syntax ([SemVer description website](https://semver.org/))
