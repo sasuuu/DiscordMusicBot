@@ -1,7 +1,15 @@
 name: Build and Publish image to Docker Hub
 
 on:
-  [workflow_dispatch]
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - 'main'
 
 jobs:
   build_and_publish_image:
@@ -29,7 +37,6 @@ jobs:
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
           flavor: |
             latest=true
