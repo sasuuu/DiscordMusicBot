@@ -1,18 +1,15 @@
-import pathlib
+import os
 import asyncio
 import platform
 from music_bot.music_bot import *
 from music_bot.music_bot_commands import *
 from music_bot.music_bot_events import *
-from configuration.configuration import *
 
 if platform.system()=='Windows':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-CONFIG_FILE = '{}/config.json'.format(pathlib.Path(__file__).parent.resolve())
-CONFIGURATION = read_configuration(CONFIG_FILE)
-DISCORD_TOKEN = CONFIGURATION["discord_token"]
-DISCORD_GUID_ID = CONFIGURATION["discord_guild_id"]
+DISCORD_TOKEN = os.environ.get("DiscordToken", None)
+DISCORD_GUID_ID = os.environ.get("DiscordGuildId", None)
 DISCORD_COMMAND_PREFIX = "!"
 
 if __name__ == "__main__":
