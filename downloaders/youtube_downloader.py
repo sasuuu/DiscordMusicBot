@@ -2,9 +2,8 @@ import yt_dlp
 import asyncio
 
 YTDL_FORMAT_OPTIONS = {
-    'format': 'bestaudio/best',
-    'restrictfilenames': True,
-    'noplaylist': False,
+    'format': 'bestaudio',
+    'noplaylist': True,
     'nocheckcertificate': True,
     'ignoreerrors': False,
     'logtostderr': False,
